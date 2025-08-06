@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>JWT 登录示例（templates 版本）</title>
+</head>
+<body>
+<h2>登录</h2>
+<input id="username" placeholder="用户名" value="admin" />
+<input id="password" placeholder="密码" value="123456" type="password" />
+<button onclick="login()">登录</button>
+
+<h2>请求受保护接口</h2>
+<button onclick="callApi()">请求 /api/hello</button>
+
+<script>
+    let token = '';
+
+    function login() {
+        fetch('/auth/login', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value
+            })
+        })
+            .then(res => res.json())
+            .then(res => {
+                if (res.code === 200) {
+                    token = res.token;
+                    alert("登录成功！");
+                } else {
+                    alert("登录失败！");
+                }
+            });
+    }
+
+    function callApi() {
+        fetch('/api/hello', {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('未认证或 token 无效');
+                }
+                return res.text();
+            })
+            .then(alert)
+            .catch(err => alert(err));
+    }
+</script>
+</body>
+</html>

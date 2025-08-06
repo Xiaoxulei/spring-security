@@ -1,0 +1,45 @@
+package com.xuxiaolei.springsecurityjwt;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.xuxiaolei.springsecurityjwt.entity.User;
+import com.xuxiaolei.springsecurityjwt.mapper.UserMapper;
+import jakarta.annotation.Resource;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+@SpringBootTest
+class SpringSecurityJwtApplicationTests {
+
+    @Resource
+    private UserMapper userMapper;
+    @Resource
+    private PasswordEncoder passwordEncoder;
+    @Test
+    void contextLoads() {
+
+        String encode = passwordEncoder.encode("123456");
+
+        System.out.println("encode = " + encode);
+
+    }
+
+    @Test
+    void insert() {
+        User user = new User();
+
+        user.setUsername("xuxiaolei");
+        user.setPassword(passwordEncoder.encode("xuxiaolei"));
+        user.setEmail("xuxiaolei@qq.com");
+        userMapper.insert(user);
+    }
+
+    @Test
+    void select() {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getUsername, "xuxiaolei");
+        User user = userMapper.selectOne(queryWrapper);
+        System.out.println(user);
+    }
+
+}

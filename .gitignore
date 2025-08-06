@@ -1,0 +1,83 @@
+# ========= 通用 =========
+*.log
+*.tmp
+*.swp
+*.bak
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.env.local
+.env.*.local
+
+# ========= 后端 Spring Boot 项目 =========
+/target/
+!src/main/resources/static/  # 如果你把 Vue 打包内容放这里，可保留
+
+# Maven
+.mvn/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+
+# Gradle（如果你用的是 gradle）
+.gradle/
+build/
+out/
+
+# ========= 前端 Vue 项目 =========
+/node_modules/
+dist/
+build/
+*.local
+package-lock.json
+yarn.lock
+
+# Vite/webpack 缓存
+/.vite/
+.vitepress/dist/
+.cache/
+
+# ========= 操作系统缓存 =========
+*.iml
+*.class
+*.exe
+*.dll
+*.out
+*.pyc
+*.db
+*.pid
+*.log
+*.gz
+*.zip
+*.rar
+
+# ========== Git ==========
+*.orig
+*.rej
+*.swo
+*.swp
+*.swn
+*.tmp
+
+# ========= 临时配置文件 =========
+.env
+.env.*
+*.bak
+*.tmp
+*.log
+*.pid
+*.seed
+
+# ========= 如果你把 Vue 打包输出到后端目录（可选）=========
+# 如果你设置了 Vue 打包到后端 static 目录，比如：
+# vue.config.js:
+# outputDir: '../springboot/src/main/resources/static'
+# 那你可以这样忽略打包结果：
+/src/main/resources/static/*
+
+# 但如果你希望 Git 跟踪该目录（首次部署用），可以保留一个空文件：
+!/src/main/resources/static/.gitkeep
