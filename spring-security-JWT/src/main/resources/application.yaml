@@ -23,6 +23,6 @@ spring:
 mybatis-plus:
   global-config:
     db-config:
-      table-prefix: blog_  #设置表前缀
+      table-prefix: sys_  #设置表前缀
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

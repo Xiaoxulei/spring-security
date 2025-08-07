@@ -55,14 +55,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     // 5. 查询 Redis 中的用户信息
                     String redisKey = LOGIN_USER_KEY_PREFIX + userId;
                     Object cachedUser = redisTemplate.opsForValue().get(redisKey);
-                    System.out.println("反序列化类型：" + (cachedUser == null ? "null" : cachedUser.getClass().getName()));
                     if (cachedUser instanceof LoginUser loginUser) {
                         // 6. 构造 Authentication 并注入上下文
                         UsernamePasswordAuthenticationToken authentication =
                                 new UsernamePasswordAuthenticationToken(
                                         loginUser,
                                         null,
-                                        null
+                                        loginUser.getAuthorities()
                                 );
 
                         SecurityContextHolder.getContext().setAuthentication(authentication);

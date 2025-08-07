@@ -21,6 +21,20 @@ public class Result<T> {
         r.setData(data);
         return r;
     }
+    public static <T> Result<T> result(String message) {
+        Result<T> r = new Result<>();
+        r.setSuccess(true);
+        r.setCode(200);
+        r.setMessage(message);
+        return r;
+    }
+    public static <T> Result<T> error(String message) {
+        Result<T> r = new Result<>();
+        r.setSuccess(false);
+        r.setCode(403);
+        r.setMessage(message);
+        return r;
+    }
     // 成功
     public static <T> Result<T> logout(T data) {
         Result<T> r = new Result<>();

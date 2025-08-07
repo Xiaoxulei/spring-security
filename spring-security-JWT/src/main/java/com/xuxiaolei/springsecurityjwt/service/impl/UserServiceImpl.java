@@ -79,12 +79,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public Result<?> logout() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         if (authentication != null && authentication.getPrincipal() instanceof LoginUser loginUser) {
             String userId = loginUser.getUser().getId().toString();
+            //JwtAuthenticationFilter中已经判断redis中是否有用户信息，如果没有是不会执行
+            //SecurityContextHolder.getContext().setAuthentication(authentication);
+            /*boolean hasKey = redisTemplate.hasKey(LOGIN_USER_KEY_PREFIX + userId);
+            if(Boolean.FALSE.equals(hasKey)){
+                return Result.error("注销失败，登录信息已失效");
+            }*/
             redisTemplate.delete(LOGIN_USER_KEY_PREFIX + userId); // 删除 Redis 中的登录信息
-            return Result.success("注销成功");
+            return Result.result("注销成功");
         }
-        return Result.success("用户未登录或已注销");
+        return Result.error("用户未登录或已注销");
     }
 }
 
