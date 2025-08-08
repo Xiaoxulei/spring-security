@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDateTime;
+
 @SpringBootTest
 class SpringSecurityJwtApplicationTests {
 
@@ -34,6 +36,8 @@ class SpringSecurityJwtApplicationTests {
 //        user.setUsername("xuxiaolei");
         user.setPassword(passwordEncoder.encode("xuxiaolei"));
         user.setEmail("xuxiaolei@qq.com");
+        user.setCreateTime(LocalDateTime.now());
+        user.setUpdateTime(LocalDateTime.now());
        /* LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(User::getId, 1);*/
         userMapper.update(user,new LambdaQueryWrapper<User>().eq(User::getId,1));

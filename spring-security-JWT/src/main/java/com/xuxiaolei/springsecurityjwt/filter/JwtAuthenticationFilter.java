@@ -18,6 +18,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Objects;
 
 import static com.xuxiaolei.springsecurityjwt.utils.RedisConstants.LOGIN_USER_KEY_PREFIX;
@@ -63,7 +64,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                         null,
                                         loginUser.getAuthorities()
                                 );
-
+                        //刷新redis用户信息时间
+                        redisTemplate.expire(redisKey, Duration.ofMinutes(10));
                         SecurityContextHolder.getContext().setAuthentication(authentication);
                     } else {
                         // Redis 中没有用户信息（可能未登录或已被登出）
@@ -71,11 +73,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         log.info("用户未登录或登录信息已过期：" + userId);
                     }
                 }
-            }
+}
         } catch (Exception e) {
-            // JWT 解析失败或 Redis 查询异常，记录日志但不抛出异常
-            System.err.println("JWT 校验失败: " + e.getMessage());
-            // 也可以选择响应 401，但通常交给全局异常或权限拦截处理器统一处理
+        // JWT 解析失败或 Redis 查询异常，记录日志但不抛出异常
+        System.err.println("JWT 校验失败: " + e.getMessage());
+        // 也可以选择响应 401，但通常交给全局异常或权限拦截处理器统一处理
         }
 
         // 继续处理后续过滤器链（不管有没有登录）

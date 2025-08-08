@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class TestController {
 
-    @PreAuthorize("hasAuthority('user:list')")
+    //这里的 authentication是 Spring Security 自动注入的参数
+    @PreAuthorize("@permission.hasPermission('user:list')")
+//    @PreAuthorize("hasAuthority('user:list')")
     @GetMapping("/hello")
     public String hello() {
         return "你好，小徐磊！你已通过JWT认证！";

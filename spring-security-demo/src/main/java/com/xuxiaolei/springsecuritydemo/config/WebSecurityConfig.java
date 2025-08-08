@@ -23,7 +23,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
  **/
 @Configuration
 @EnableWebSecurity //在springboot项目中可以省略
-@EnableMethodSecurity
+@EnableMethodSecurity  //权限
 public class WebSecurityConfig {
 
     /*@Bean

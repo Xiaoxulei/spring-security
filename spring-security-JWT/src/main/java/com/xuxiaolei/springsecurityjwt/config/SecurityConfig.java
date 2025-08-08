@@ -65,6 +65,7 @@ public class SecurityConfig {
         });
         return http.build();
     }
+
     // 必须暴露 authenticationManager Bean，否则你在 service 里无法注入
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
